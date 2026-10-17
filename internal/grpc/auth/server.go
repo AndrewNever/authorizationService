@@ -12,7 +12,10 @@ type serverAPI struct {
 }
 
 func Register(gRPC *grpc.Server) {
-	authv1.RegisterAuthServer(gRPC, &serverAPI{})
+	authv1.RegisterAuthServer(
+		gRPC,
+		&serverAPI{},
+	)
 }
 
 func (s *serverAPI) Login(
