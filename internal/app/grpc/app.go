@@ -29,6 +29,12 @@ func New(
 	}
 }
 
+func (a *App) MustRun() {
+	if err := a.Run(); err != nil {
+		panic(err)
+	}
+}
+
 func (a *App) Run() error {
 	const op = "grpcapp.Run"
 	log := a.log.With(

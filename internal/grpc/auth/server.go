@@ -22,19 +22,22 @@ func (s *serverAPI) Login(
 	ctx context.Context,
 	req *authv1.LoginRequest,
 ) (*authv1.LoginResponse, error) {
-	panic("implement me")
+	return &authv1.LoginResponse{
+		Token: req.GetEmail(),
+	}, nil
+
 }
 
 func (s *serverAPI) Register(
 	ctx context.Context,
-	req *authv1.LoginRequest,
-) (*authv1.LoginResponse, error) {
+	req *authv1.RegisterRequest,
+) (*authv1.RegisterResponse, error) {
 	panic("implement me")
 }
 
 func (s *serverAPI) IsAdmin(
 	ctx context.Context,
-	req *authv1.LoginRequest,
-) (*authv1.LoginResponse, error) {
+	req *authv1.IsAdminRequest,
+) (*authv1.IsAdminResponse, error) {
 	panic("implement me")
 }

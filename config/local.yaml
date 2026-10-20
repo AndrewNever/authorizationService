@@ -1,4 +1,4 @@
-env: "local"
+goenv: "local"
 storage_path: "./storage/authService.db"
 token_ttl: 1h
 grpc:

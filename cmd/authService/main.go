@@ -1,10 +1,13 @@
 package main
 
 import (
+	"authorizationService/internal/app"
 	"authorizationService/internal/config"
 	"authorizationService/internal/lib/logger/handlers/slogpretty"
 	"log/slog"
 	"os"
+	"os/signal"
+	"syscall"
 )
 
 const (
@@ -19,8 +22,23 @@ func main() {
 	log.Info("starting auth service", slog.Any("cfg", cfg)) //warning! unsafe operation
 
 	//app
-	//grpc-serv
 
+	application := app.New(log, cfg.GRPC.Port, cfg.StoragePath, cfg.TokenTtl)
+
+	go application.GRPCSrv.MustRun()
+
+	 //Graceful shutdown
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
+
+	sign := <-stop
+	log.Info("stopping application", slog.String("signal", sign.String()))
+
+	application.GRPCSrv.Stop()
+
+	log.Info("application stopped")
+
+	//grpc-serv
 }
 
 func setupLogger(env string) *slog.Logger {
